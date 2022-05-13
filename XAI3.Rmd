@@ -111,11 +111,6 @@ for(i in 1:nrow(th)){
 ggplot(th, aes(x=temp, y = hum, fill = p, height = 10, width = 15)) + geom_tile() + geom_rug()+scale_fill_continuous(guide="colourbar", name="Number of bikes", )
 ```
 
-### Answer:
-
-Vamos a estudiar cómo influyen la temperatura y la humedad de forma conjunta en el número de bicicletas predichas. Para ello, estudiamos el PDP en dos dimensiones para ambas variables.
-
-Observamos cómo la combinación de temperaturas bajas y altas humedades lanza las predicciones más bajas de bicicletas alquiladas, de nuevo debemos tener cuidado con el gráfico ya que apenas tenemos valores bajos de temperaturas para humedades muy altas. Observamos además, cómo son las temperaturas menores de 10ºC las que marcan una clara diferencia en la predicción del número de bicicletas, y destacando los casos más favorables con temperaturas de entre 10 y 20ºC aproximadamente y menos de un 75% de humedad en el ambiente. Obviamente, como ya hemos mencionado en el ejercicio anterior, las condiciones más agradables favorecerán mucho la predisposición de la gente para alquilar bicis.
 
 
 ## EXERCISE:
@@ -153,3 +148,27 @@ for(c in names(results)[1:4])
 }
 
 ```
+
+```{r}
+library(gridExtra)
+bed=ggplot(sampled, aes(x=bedrooms, y=results$bedrooms))+geom_line()+geom_rug(sides='b')
+bath=ggplot(sampled, aes(x=bathrooms, y=results$bathrooms))+geom_line()+geom_rug(sides='b')
+sqft=ggplot(sampled, aes(x=sqft_living, y=results$sqft_living))+geom_line()+geom_rug(sides='b')
+floor=ggplot(sampled, aes(x=floors, y=results$floors))+geom_line()+geom_rug(sides='b')
+grid.arrange(bed, bath, sqft, floor, nrow =1)
+```
+
+### Answer:
+
+*El gráfico resultante es diferente del propuesto en las soluciones, suponemos que por la muestra seleccionada; no obstante, las conclusiones son muy similares y hemos tomado como referencia las soluciones para redactar las conclusiones.
+
+Del mismo modo que en el primer ejercicio, aplicamos un PDP para interpretar las predicciones del modelo random forest y explicar la influencia de cada una de las variables.
+
+Empezamos con el número de dormitorios, el precio es muy alto para las casas con uno o dos dormitorios, mucho menor para aquellas con entre tres y cinco dormitorios y algo mayor para aquellas con seis. Suponemos que puede tener sentido ya que, aquellas casas con muy pocos dormitorios pueden ser casas más lujosas en lugares céntricos donde las casas son más pequeñas y los precios más altos. De igual modo, las casas con seis dormitorios son casas de mayores dimensiones, por lo que parece lógico que el precio aumente. Por otro lado, las casas de entre tres y cinco dormitorios corresponden a domicilios familiares comunes cuyo precio es más económico.
+
+En segundo lugar, el precio de la vivienda aumenta de forma considerable por cada baño extra, teniendo las casas con uno o dos baños un precio bastante bajo. Al igual que en el anterior caso, las viviendas con uno o dos baños corresponden a domicilios familiares comunes con precios mucho más económicos, a medida que aumentamos el número de baños, la vivienda posiblemente sea mayor y crecerá en exclusividad, y, por tanto, en precio. Cabe destacar que contamos con un bajo número de viviendas con una cantidad de baños superior a 
+4, lo que podría disminuir la precisión de la predicción.
+
+A continuación, estudiamos la influencia del tamaño de la vivienda y observamos que las viviendas más grandes son más caras. Este caso no tiene mucha complicación, las viviendas más grandes son más caras en general, por lo que tiene sentido.
+
+Finalmente, atendiendo al número de plantas, observamos que la predicción del precio apenas varía para una o dos plantas (siendo las de una algo mayor) y crece de forma notable para viviendas con tres plantas. Las viviendas con una o dos plantas son viviendas comunes que no tienen por qué tener un precio elevado, al contrario que las viviendas con tres plantas que son casas más exclusivas cuyo precio es mayor.
