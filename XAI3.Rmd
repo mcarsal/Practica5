@@ -111,6 +111,11 @@ for(i in 1:nrow(th)){
 ggplot(th, aes(x=temp, y = hum, fill = p, height = 10, width = 15)) + geom_tile() + geom_rug()+scale_fill_continuous(guide="colourbar", name="Number of bikes", )
 ```
 
+### Answer:
+
+Vamos a estudiar cómo influyen la temperatura y la humedad de forma conjunta en el número de bicicletas predichas. Para ello, estudiamos el PDP en dos dimensiones para ambas variables.
+
+Observamos cómo la combinación de temperaturas bajas y altas humedades lanza las predicciones más bajas de bicicletas alquiladas, de nuevo debemos tener cuidado con el gráfico ya que apenas tenemos valores bajos de temperaturas para humedades muy altas. Observamos además, cómo son las temperaturas menores de 10ºC las que marcan una clara diferencia en la predicción del número de bicicletas, y destacando los casos más favorables con temperaturas de entre 10 y 20ºC aproximadamente y menos de un 75% de humedad en el ambiente. Obviamente, como ya hemos mencionado en el ejercicio anterior, las condiciones más agradables favorecerán mucho la predisposición de la gente para alquilar bicis.
 
 
 ## EXERCISE:
